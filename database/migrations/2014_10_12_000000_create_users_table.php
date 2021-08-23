@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('type');
             $table->string('name');
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('status')->default('active');
             $table->float('due_amount')->default(0);
             $table->float('payable_amount')->default(0);

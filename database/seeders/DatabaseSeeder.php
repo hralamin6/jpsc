@@ -15,7 +15,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert(['name'=>'hr alamin','email'=> 'hralamin2020@gmail.com', 'phone'=>'01254856954', 'type'=> 'admin',]);
+        DB::table('users')->insert([
+            'name'=>'hr alamin',
+            'email'=>'hralamin2020@gmail.com',
+            'type'=> 'admin',
+            'phone'=> '61065051',
+            'profile_photo_path' => 'https://via.placeholder.com/640x480.png/00ddff?text=Admin',
+            'password'=>Hash::make('000000')
+        ]);
+
+//        DB::table('users')->insert(['name'=>'hr alamin','email'=> 'hralamin2020@gmail.com', 'phone'=>'01254856954', 'type'=> 'admin',]);
 
 //        DB::table('users')->insert(['name'=>'Lamiya', 'phone'=>'85406454165', 'type'=> 'customer',]);
 //        DB::table('users')->insert(['name'=>'Taniya', 'phone'=>'65498498465', 'type'=> 'customer',]);
