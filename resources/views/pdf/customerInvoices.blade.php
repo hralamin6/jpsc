@@ -6,14 +6,16 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style type="text/css">
+
+    <style>
         html {
-            font-family: sans-serif;
+            /*font-family: sans-serif;*/
             line-height: 1.15;
             margin: 0;
         }
+
         body {
-            font-family: Nikosh, sans-serif;
+            font-family: "nikosh", Nikosh, nikos, sans-serif;
             font-weight: 400;
             line-height: 1.5;
             color: #212529;
@@ -130,7 +132,7 @@
             border: none !important;
         }
     </style>
-{{--    <link rel="stylesheet" href="css/app.css">--}}
+    <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
@@ -147,15 +149,10 @@
                     <!-- /.card-header -->
                     <div class="card-body">
 
-                        ল ফিচার যেমন যেকোন পোষ্ট এ লাইক,রিপোর্ট কমেন্ট করার সুবিধা পাবেন একদম হাতের মুঠোয়
-                        – অফলাইন রিডিং, ইন্টারনেট না থাকলেও নিতে পারবেন প্রযুক্তিগত জ্ঞানের স্বাধ
-                        – ডার্ক মুড , আপনার পছন্দের ফন্ট বাছাই এর সুবিধা
                         <div class="row table-responsive">
                             <table class="table table-bordered table-striped">
-
                                 <thead>
                                 <tr>
-                                    <th><input type="checkbox" wire:model="selectall"></th>
                                     <th wire:click.prevent="FilterSerialize('product_id')">Product</th>
                                     <th wire:click.prevent="FilterSerialize('category_id')">Size</th>
                                     <th wire:click.prevent="FilterSerialize('quantity')">Quantity</th>
@@ -164,8 +161,8 @@
                                     <th wire:click.prevent="FilterSerialize('total_price')">Total</th>
                                     <th wire:click.prevent="FilterSerialize('paid_price')">Paid</th>
                                     <th wire:click.prevent="FilterSerialize('due_price')">Due</th>
-                                    <th wire:click.prevent="FilterSerialize('created_at')">Date</th>
                                     <th wire:click.prevent="FilterSerialize('price_status')">Paid Status</th>
+                                    <th wire:click.prevent="FilterSerialize('created_at')">Date</th>
 
                                 </tr>
                                 </thead>
@@ -174,19 +171,18 @@
                                 @forelse($sells->reverse() as $key=>$sell)
                                     <tr  wire:key="row-{{ $sell->id }}">
 
-                                        <td><input type="checkbox" value="{{ $sell->id }}" wire:model="selections"></td>
-                                        <td class="text-capitalize"><a href="">{{ $sell->product->name }}</a></td>
-                                        <td class="text-capitalize"><a href="">{{ $sell->category->name }}</a></td>
+                                        <td class="text-capitalize">{{ $sell->product->name }}</td>
+                                        <td class="text-capitalize">{{ $sell->category->name }}</td>
                                         <td class="text-capitalize">{{ $sell->quantity }}</td>
                                         <td class="text-capitalize">{{ $sell->kg }}</td>
                                         <td class="text-capitalize">{{ $sell->unit_price }}</td>
                                         <td class="text-capitalize">{{ $sell->total_price }}</td>
                                         <td class="text-capitalize">{{ $sell->paid_price }}</td>
                                         <td class="text-capitalize">{{ $sell->due_price }}</td>
-                                        <td class="text-capitalize">{{ \Carbon\Carbon::parse($sell->created_at)->format('Y-m-d') }}</td>
                                         <td>
-                                            <span class="text-capitalize badge @if($sell->price_status==='fullpaid') badge-success @elseif($sell->price_status==='subpaid') badge-warning @else badge-danger @endif ">{{ $sell->price_status }}</span>
+                                            <span class="text-capitalize p-3" style="@if($sell->price_status==='fullpaid') color:green @elseif($sell->price_status==='subpaid') color:sandybrown @else color:red @endif">{{ $sell->price_status }}</span>
                                         </td>
+                                        <td class="text-capitalize">{{ \Carbon\Carbon::parse($sell->created_at)->format('Y-m-d') }}</td>
                                     </tr>
                                 @empty
                                     <th class="text-center" colspan="12">No sell found</th>

@@ -9,7 +9,6 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Mpdf\Mpdf;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
-
 class CustomerPaymentComponent extends Component
 {
     use WithPagination;
@@ -79,7 +78,6 @@ class CustomerPaymentComponent extends Component
     }
     public function generate_pdf()
     {
-        $mpdf = new Mpdf(['default_font_size'=>'12', 'default_font'=>'nikosh']);
         return response()->streamDownload(function () {
             $sells = Sell::whereUser_id($this->customer->id)->whereStatus('active')->orderBy('id', 'desc')->paginate($this->paginate);
             $data['total'] = $this->customer->sell()->whereStatus('active')->sum('total_price');
@@ -91,9 +89,9 @@ class CustomerPaymentComponent extends Component
                 $data['progressBar'] = 100*$data['paid']/$data['total'];
             }
 
-            $pdf = PDF::loadView('pdf.customerInvoices', compact('sells', 'data', 'payments'), [], ['default_font' => 'nikosh',]);
+            $pdf = PDF::loadView('pdf.customerInvoices', compact('sells', 'data', 'payments'));
             return $pdf->stream('document.pdf');
-        }, 'invoices.pdf');
+        }, ''.$this->customer->name.'.pdf');
 
     }
     public function render()

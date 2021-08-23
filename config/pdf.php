@@ -5,7 +5,6 @@ return [
     'custom_font_data' => [
 				"nikosh" => [
 					'R' => "Nikosh.ttf",
-					'useOTL' => 0xFF,
 				],
     ],
 	'mode'                  => 'utf-8',
