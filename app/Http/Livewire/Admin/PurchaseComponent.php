@@ -87,16 +87,26 @@ class PurchaseComponent extends Component
     {
         $purchase = Purchase::find($this->purchaseId);
         $product = $purchase->product;
+        $seller = $purchase->seller;
         if ($purchase->status==='active'){
-            $product->amount -= $purchase->kg;
-            $product->stock_amount -= $purchase->kg;
+            $product->full_kg -= $purchase->kg;
+            $product->stock_kg -= $purchase->kg;
+            $product->full_quantity -= $purchase->quantity;
+            $product->stock_quantity -= $purchase->quantity;
+
+            $seller->payable_amount -= $purchase->total_price;
             $purchase->status = 'inactive';
         }else{
-           $product->amount += $purchase->kg;
-           $product->stock_amount += $purchase->kg;
+            $product->full_kg += $purchase->kg;
+            $product->stock_kg += $purchase->kg;
+            $product->full_quantity += $purchase->quantity;
+            $product->stock_quantity += $purchase->quantity;
+
+            $seller->payable_amount += $purchase->total_price;
             $purchase->status = 'active';
         }
         $product->save();
+        $seller->save();
         $purchase->save();
         $this->alert('success', 'Successfully purchase completed');
         $this->dispatchBrowserEvent('purchased', ['message' => 'Successfully purchase completed!']);

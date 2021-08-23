@@ -61,7 +61,7 @@
                                     <tr>
                                         <th><input type="checkbox" wire:model="selectall"></th>
                                         <th wire:click.prevent="FilterSerialize('name')">Name</th>
-                                        <th wire:click.prevent="FilterSerialize('due_amount')">Due</th>
+                                        <th wire:click.prevent="FilterSerialize('payable_amount')">Payable</th>
                                         <th wire:click.prevent="FilterSerialize('phone')">Phone</th>
                                         <th wire:click.prevent="FilterSerialize('status')">Status</th>
                                         <th>Action</th>
@@ -72,7 +72,7 @@
                                         <tr @if (is_array($selections)) @if(in_array($seller->id, $selections)) class="bg-secondary" @endif @endif wire:key="row-{{ $seller->id }}">
                                             <td><input type="checkbox" value="{{ $seller->id }}" wire:model="selections"></td>
                                             <td class="text-capitalize"><a href="">{{ $seller->name }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $seller->due_amount }}</a></td>
+                                            <td class="text-capitalize"><a href="">{{ $seller->payable_amount }}</a></td>
                                             <td class="text-capitalize"><a href="">{{ $seller->phone }}</a></td>
                                             <td><span class="text-capitalize badge {{ $seller->status==='active'?'badge-success':'badge-danger' }}" href="">{{ $seller->status }}</span></td><td>
                                                 <a wire:click.prevent="Edit({{ $seller->id }})"><i class="fa fa-edit text-pink"></i></a>

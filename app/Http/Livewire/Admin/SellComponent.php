@@ -81,17 +81,21 @@ class SellComponent extends Component
         $sell = Sell::find($this->sellId);
         $product = $sell->product;
         $customer = $sell->customer;
-        if ($product->stock_amount<$sell->kg) {
+        if ($product->stock_kg<$sell->kg | $product->stock_quantity<$sell->quantity) {
             $this->alert('error', 'You does not have enough stock');
         }else{
             if ($sell->status==='active'){
-                $product->stock_amount += $sell->kg;
-                $product->sell_amount -= $sell->kg;
+                $product->sell_kg -= $sell->kg;
+                $product->stock_kg += $sell->kg;
+                $product->sell_quantity -= $sell->quantity;
+                $product->stock_quantity += $sell->quantity;
                 $customer->due_amount -= $sell->total_price;
                 $sell->status = 'inactive';
             }else{
-                $product->sell_amount += $sell->kg;
-                $product->stock_amount -= $sell->kg;
+                $product->sell_kg += $sell->kg;
+                $product->stock_kg -= $sell->kg;
+                $product->sell_quantity += $sell->quantity;
+                $product->stock_quantity -= $sell->quantity;
                 $customer->due_amount += $sell->total_price;
                 $sell->status = 'active';
             }

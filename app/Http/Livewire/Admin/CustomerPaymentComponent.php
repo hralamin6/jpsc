@@ -5,10 +5,10 @@ namespace App\Http\Livewire\Admin;
 use App\Models\PaidAmount;
 use App\Models\Sell;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Mpdf\Mpdf;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class CustomerPaymentComponent extends Component
 {
@@ -77,6 +77,25 @@ class CustomerPaymentComponent extends Component
     {
         $this->customer = User::find($id);
     }
+    public function generate_pdf()
+    {
+        $mpdf = new Mpdf(['default_font_size'=>'12', 'default_font'=>'nikosh']);
+        return response()->streamDownload(function () {
+            $sells = Sell::whereUser_id($this->customer->id)->whereStatus('active')->orderBy('id', 'desc')->paginate($this->paginate);
+            $data['total'] = $this->customer->sell()->whereStatus('active')->sum('total_price');
+            $data['paid'] = $this->customer->sell()->whereStatus('active')->sum('paid_price');
+            $data['due']= $this->customer->sell()->whereStatus('active')->sum('due_price');
+            $data['paidAmount'] = $this->customer->paidAmount()->whereStatus('active')->sum('amount');
+            $payments = $this->customer->paidAmount()->whereStatus('active')->orderBy('id', 'desc')->paginate($this->paginate);
+            if ( $data['paid']!=0) {
+                $data['progressBar'] = 100*$data['paid']/$data['total'];
+            }
+
+            $pdf = PDF::loadView('pdf.customerInvoices', compact('sells', 'data', 'payments'), [], ['default_font' => 'nikosh',]);
+            return $pdf->stream('document.pdf');
+        }, 'invoices.pdf');
+
+    }
     public function render()
     {
         $sells = Sell::whereUser_id($this->customer->id)->whereStatus('active')->orderBy('id', 'desc')->paginate($this->paginate);
@@ -84,7 +103,7 @@ class CustomerPaymentComponent extends Component
         $data['paid'] = $this->customer->sell()->whereStatus('active')->sum('paid_price');
         $data['due']= $this->customer->sell()->whereStatus('active')->sum('due_price');
         $data['paidAmount'] = $this->customer->paidAmount()->whereStatus('active')->sum('amount');
-        $payments = $this->customer->paidAmount()->whereStatus('active')->orderBy('id', 'asc')->get();
+        $payments = $this->customer->paidAmount()->whereStatus('active')->orderBy('id', 'desc')->paginate($this->paginate);
         if ( $data['paid']!=0) {
              $data['progressBar'] = 100*$data['paid']/$data['total'];
         }

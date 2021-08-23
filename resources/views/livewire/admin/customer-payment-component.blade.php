@@ -35,7 +35,12 @@
                                     <input wire:model.lazy="search" type="date" class="form-control" placeholder="Search by date">
                                 </div>
                                 <div class="form-group col-md-2 col-3">
-                                    <input type="submit" class="btn btn-success" value="Filter">
+                                    <input wire:click.prevent="generate_pdf" type="submit" class="btn btn-success" value="Filter">
+                                </div>
+                                <div class="form-group col-md-2 col-3">
+                                    <input wire:click.prevent="generate_pdf" type="submit" class="btn btn-success" value="Filter">
+                                    <span wire:loading wire:target="generate_pdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
                                 </div>
                                 <div class="form-group col-md-2 col-12 float-right">
                                     @if($selections)
@@ -57,6 +62,11 @@
 
                                 </div>
                             </div>
+                            <div class="justify-content-center items-center row">
+                                <div class="col-12"></div>
+                                {{ $sells->links() }}
+                            </div>
+
                             <div class="row table-responsive" wire:loading.delay.class="opacity-50" wire:target="paginate, search, FilterSerialize, selectall, selections">
                                 <table class="table table-bordered table-striped text-sm">
                                     <thead>
@@ -86,7 +96,7 @@
                                             <td class="text-capitalize">{{ $sell->quantity }}</td>
                                             <td class="text-capitalize">{{ $sell->kg }}</td>
                                             <td class="text-capitalize">{{ $sell->unit_price }}</td>
-                                            <td class="text-capitalize">{{ $sell->total_price }}</td>
+                                        ap    <td class="text-capitalize">{{ $sell->total_price }}</td>
                                             <td class="text-capitalize">{{ $sell->paid_price }}</td>
                                             <td class="text-capitalize">{{ $sell->due_price }}</td>
                                             <td class="text-capitalize">{{ \Carbon\Carbon::parse($sell->created_at)->format('Y-m-d') }}</td>
@@ -117,7 +127,7 @@
                                     @php
                                         $due = 0;
                                     @endphp
-                                    @foreach($payments as $payment)
+                                    @foreach($payments->reverse() as $payment)
                                         @php
                                         $due += $payment->amount;
                                         $due2 = $data['total']-$due;
@@ -138,11 +148,12 @@
                             </div>
                             <div class="justify-content-center items-center row">
                                 <div class="col-12"></div>
-                                {{ $sells->links() }}
+                                {{ $payments->links() }}
                             </div>
                         </div>
                     </div>
                 </div>
+                @if($data['due']>0)
                 <div class="col-md-12">
                     <!-- general form elements -->
                     <div class="card card-primary">
@@ -166,6 +177,7 @@
                         </form>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </section>

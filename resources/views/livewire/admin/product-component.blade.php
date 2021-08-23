@@ -1,3 +1,13 @@
+@push('css')
+    <style>
+        .table td.fit,
+        .table th.fit {
+            white-space: nowrap;
+            width: 1%;
+        }
+    </style>
+@endpush
+
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -58,14 +68,20 @@
                                 </div>
                             </div>
                             <div class="row table-responsive" wire:loading.delay.class="opacity-50" wire:target="paginate, search, FilterSerialize, selectall, selections">
-                                <table class="table table-bordered table-striped text-sm">
+                                <table class="table table-bordered table-striped text-sm table-fit">
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" wire:model="selectall"></th>
                                         <th wire:click.prevent="FilterSerialize('name')">Name</th>
-                                        <th wire:click.prevent="FilterSerialize('amount')">Amount</th>
-                                        <th wire:click.prevent="FilterSerialize('sell_amount')">Sell</th>
-                                        <th wire:click.prevent="FilterSerialize('stock_amount')">Stock</th>
+                                        <th wire:click.prevent="FilterSerialize('full_quantity')">Full Q</th>
+                                        <th wire:click.prevent="FilterSerialize('sell_quantity')">Sell Q</th>
+                                        <th wire:click.prevent="FilterSerialize('stock_quantity')">Stock Q</th>
+                                        <th wire:click.prevent="FilterSerialize('full_kg')">Full Kg</th>
+                                        <th wire:click.prevent="FilterSerialize('sell_kg')">Sell Kg</th>
+                                        <th wire:click.prevent="FilterSerialize('stock_kg')">Stock Kg</th>
+                                        <th>Full Sell</th>
+                                        <th>Full Buy</th>
+                                        <th>Earn</th>
                                         <th wire:click.prevent="FilterSerialize('status')">Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -75,9 +91,15 @@
                                         <tr @if (is_array($selections)) @if(in_array($product->id, $selections)) class="bg-secondary" @endif @endif wire:key="row-{{ $product->id }}">
                                             <td><input type="checkbox" value="{{ $product->id }}" wire:model="selections"></td>
                                             <td class="text-capitalize"><a href="">{{ $product->name }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->amount }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->sell_amount }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->stock_amount }}</a></td>
+                                            <td class="text-capitalize"><a href="">{{ $product->full_quantity }}</a></td>
+                                            <td class="text-capitalize"><a href="">{{ $product->sell_quantity }}</a></td>
+                                            <td class="text-capitalize"><a href="">{{ $product->stock_quantity }}</a></td>
+                                            <td class="text-capitalize"><a href="">{{ $product->full_kg }}</a></td>
+                                            <td class="text-capitalize"><a href="">{{ $product->sell_kg }}</a></td>
+                                            <td class="text-capitalize"><a href="">{{ $product->stock_kg }}</a></td>
+                                            <td class="text-capitalize"><a href="">{{ $product->sells()->sum('total_price') }}</a></td>
+                                            <td class="text-capitalize"><a href="">{{ $product->purchases->sum('total_price') }}</a></td>
+                                            <td class="@if($product->sells->sum('total_price')-$product->purchases->sum('total_price')<0) text-danger @endif"><a href="">{{$product->sells->sum('total_price')-$product->purchases->sum('total_price') }}</a></td>
                                             <td><span class="text-capitalize badge {{ $product->status==='active'?'badge-success':'badge-danger' }}" href="">{{ $product->status }}</span></td><td>
                                                 <a wire:click.prevent="Edit({{ $product->id }})"><i class="fa fa-edit text-pink"></i></a>
                                             </td>
