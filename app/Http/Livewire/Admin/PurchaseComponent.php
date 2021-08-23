@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\purchase;
+use App\Models\Purchase;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -41,12 +41,12 @@ class PurchaseComponent extends Component
         if ($validatedData['paid_price']>$validatedData['total_price']) {
             $this->alert('error', 'Paid price must be smaller than total price');
         }else{
-            purchase::create($validatedData);
+            Purchase::create($validatedData);
             $this->dispatchBrowserEvent('show-form', ['action'=>'hide']);
             $this->alert('success', 'Successfully inserted');
         }
     }
-    public function Edit(purchase $purchase)
+    public function Edit(Purchase $purchase)
     {
         $this->reset();
         $this->editmode = true;
@@ -108,14 +108,14 @@ class PurchaseComponent extends Component
     }
     public function delete()
     {
-        $purchase = purchase::whereIn('id', $this->selections);
+        $purchase = Purchase::whereIn('id', $this->selections);
         $purchase->delete();
         $this->dispatchBrowserEvent('deleted', ['message' => 'Appointment deleted successfully!']);
     }
     public function updatedSelectall($value)
     {
         if ($value){
-            $this->selections = purchase::where('created_at', 'like', '%'.$this->search.'%')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate)->pluck('id')->map(fn($id) =>(string) $id);
+            $this->selections = Purchase::where('created_at', 'like', '%'.$this->search.'%')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate)->pluck('id')->map(fn($id) =>(string) $id);
         }else{
             $this->selections = [];
         }
@@ -123,7 +123,7 @@ class PurchaseComponent extends Component
     public function activeStatus()
     {
         foreach ($this->selections as $key => $selection) {
-            $purchase = purchase::find($selection);
+            $purchase = Purchase::find($selection);
             $purchase->status = 'active';
             $purchase->save();
         }
@@ -132,7 +132,7 @@ class PurchaseComponent extends Component
     public function inactiveStatus()
     {
         foreach ($this->selections as $key => $selection) {
-            $purchase = purchase::find($selection);
+            $purchase = Purchase::find($selection);
             $purchase->status = 'inactive';
             $purchase->save();
         }
@@ -152,7 +152,7 @@ class PurchaseComponent extends Component
         $categories = Category::whereStatus('active')->get();
         $sellers = User::whereStatus('active')->whereType('seller')->get();
         $products = Product::whereStatus('active')->get();
-        $purchases = purchase::when($this->search, function($query) {
+        $purchases = Purchase::when($this->search, function($query) {
             return $query->whereDate('created_at', '=', Carbon::parse($this->search)->format('Y-m-d'));
         })->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
         return view('livewire.admin.purchase-component', compact('purchases', 'categories', 'sellers', 'products'));

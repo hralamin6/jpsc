@@ -21,13 +21,13 @@ class CreateUsersTable extends Migration
             $table->string('status')->default('active');
             $table->float('due_amount')->default(0);
             $table->float('payable_amount')->default(0);
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->text('address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->default('$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('profile_photo_path', 2048)->nullable()->default('https://via.placeholder.com/640x480.png/00ddff?text=Admin');
             $table->timestamps();
         });
     }

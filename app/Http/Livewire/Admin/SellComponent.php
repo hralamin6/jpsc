@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Category;
 use App\Models\PaidAmount;
 use App\Models\Product;
-use App\Models\sell;
+use App\Models\Sell;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -39,11 +39,11 @@ class SellComponent extends Component
         $validatedData['total_price'] = $validatedData['kg']*$validatedData['unit_price'];
         $validatedData['due_price'] = $validatedData['total_price'];
         $validatedData['paid_price'] = 0;
-            sell::create($validatedData);
+            Sell::create($validatedData);
             $this->dispatchBrowserEvent('show-form', ['action'=>'hide']);
             $this->alert('success', 'Successfully inserted');
     }
-    public function Edit(sell $sell)
+    public function Edit(Sell $sell)
     {
         $this->reset();
         $this->editmode = true;
@@ -78,7 +78,7 @@ class SellComponent extends Component
 
     public function sell_confirmed()
     {
-        $sell = sell::find($this->sellId);
+        $sell = Sell::find($this->sellId);
         $product = $sell->product;
         $customer = $sell->customer;
         if ($product->stock_amount<$sell->kg) {
@@ -109,14 +109,14 @@ class SellComponent extends Component
     }
     public function delete()
     {
-        $sell = sell::whereIn('id', $this->selections);
+        $sell = Sell::whereIn('id', $this->selections);
         $sell->delete();
         $this->dispatchBrowserEvent('deleted', ['message' => 'Appointment deleted successfully!']);
     }
     public function updatedSelectall($value)
     {
         if ($value){
-            $this->selections = sell::where('created_at', 'like', '%'.$this->search.'%')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate)->pluck('id')->map(fn($id) =>(string) $id);
+            $this->selections = Sell::where('created_at', 'like', '%'.$this->search.'%')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate)->pluck('id')->map(fn($id) =>(string) $id);
         }else{
             $this->selections = [];
         }
@@ -124,7 +124,7 @@ class SellComponent extends Component
     public function activeStatus()
     {
         foreach ($this->selections as $key => $selection) {
-            $sell = sell::find($selection);
+            $sell = Sell::find($selection);
             $sell->status = 'active';
             $sell->save();
         }
@@ -133,7 +133,7 @@ class SellComponent extends Component
     public function inactiveStatus()
     {
         foreach ($this->selections as $key => $selection) {
-            $sell = sell::find($selection);
+            $sell = Sell::find($selection);
             $sell->status = 'inactive';
             $sell->save();
         }
@@ -153,7 +153,7 @@ class SellComponent extends Component
         $categories = Category::whereStatus('active')->get();
         $customers = User::whereStatus('active')->whereType('customer')->get();
         $products = Product::whereStatus('active')->get();
-        $sells = sell::when($this->search, function($query) {
+        $sells = Sell::when($this->search, function($query) {
             return $query->whereDate('created_at', '=', Carbon::parse($this->search)->format('Y-m-d'));
         })->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
         return view('livewire.admin.sell-component', compact('sells', 'categories', 'customers', 'products'));

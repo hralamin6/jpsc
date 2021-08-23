@@ -16,9 +16,12 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->float('amount')->default(0);
-            $table->float('sell_amount')->default(0);
-            $table->float('stock_amount')->default(0);
+            $table->float('full_quantity')->default(0);
+            $table->float('sell_quantity')->default(0);
+            $table->float('stock_quantity')->default(0);
+            $table->float('full_kg')->default(0);
+            $table->float('sell_kg')->default(0);
+            $table->float('stock_kg')->default(0);
             $table->string('status')->default('active');
             $table->timestamps();
         });
