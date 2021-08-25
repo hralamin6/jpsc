@@ -22,11 +22,7 @@ class SetupFactory extends Factory
     public function definition()
     {
         return [
-            'site_url' => $this->faker->url(),
-            'email' => $this->faker->email(),
-            'phone' => $this->faker->phoneNumber(),
-            'location' => $this->faker->address(),
-            'about' => $this->faker->sentence(200),
+            'about' => $this->faker->sentence(100),
             'logo' => 'http://lorempixel.com/300/100/nature/'.rand(1, 9).'/'
         ];
     }
