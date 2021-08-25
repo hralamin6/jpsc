@@ -3,9 +3,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <div class="h5">Manage category</div>
-                </div>
-                <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">category</li>
@@ -50,14 +47,15 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-2 col-3">
-                                    <input wire:model.lazy="paginate" type="number" class="form-control">
+                                    <input wire:model="paginate" type="number" class="form-control">
 
                                 </div>
                                 <div class="form-group col-md-2 col-6">
-                                    <input wire:model.lazy="search" type="text" class="form-control" placeholder="Search by name">
+                                    <input wire:model="search" type="text" class="form-control" placeholder="Search by name">
                                 </div>
                                 <div class="form-group col-md-2 col-3">
-                                    <input type="submit" class="btn btn-success" value="Filter">
+                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value="PDF">
+                                    <span wire:loading wire:target="generate_pdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </div>
                                 <div class="form-group col-md-2 col-12 float-right">
                                     @if($selections)
@@ -83,6 +81,14 @@
                                     <tr>
                                         <th><input type="checkbox" wire:model="selectall"></th>
                                         <th wire:click.prevent="FilterSerialize('name')">Name</th>
+                                        <th>Purchases</th>
+                                        <th>Sells</th>
+                                        <th>Buying Price</th>
+                                        <th>Selling Price</th>
+                                        <th>Buying Quantity</th>
+                                        <th>Selling Quantity</th>
+                                        <th>Buying Kg</th>
+                                        <th>Selling Kg</th>
                                         <th wire:click.prevent="FilterSerialize('status')">Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -92,12 +98,20 @@
                                         <tr @if (is_array($selections)) @if(in_array($category->id, $selections)) class="bg-secondary" @endif @endif wire:key="row-{{ $category->id }}">
                                             <td><input type="checkbox" value="{{ $category->id }}" wire:model="selections"></td>
                                             <td class="text-capitalize"><a href="">{{ $category->name }}</a></td>
+                                            <td>{{ $category->sells->count() }}</td>
+                                            <td>{{ $category->purchases->count() }}</td>
+                                            <td>{{ $category->sells->sum('total_price') }}</td>
+                                            <td>{{ $category->purchases->sum('total_price') }}</td>
+                                            <td>{{ $category->sells->sum('quantity') }}</td>
+                                            <td>{{ $category->purchases->sum('quantity') }}</td>
+                                            <td>{{ $category->sells->sum('kg') }}</td>
+                                            <td>{{ $category->purchases->sum('kg') }}</td>
                                             <td><span class="text-capitalize badge {{ $category->status==='active'?'badge-success':'badge-danger' }}" href="">{{ $category->status }}</span></td><td>
                                                 <a wire:click.prevent="Edit({{ $category->id }})"><i class="fa fa-edit text-pink"></i></a>
                                             </td>
                                         </tr>
                                     @empty
-                                        <th class="text-center" colspan="4">No category found</th>
+                                        <th class="text-center" colspan="12">No category found</th>
                                     @endforelse
                                     </tbody>
                                 </table>

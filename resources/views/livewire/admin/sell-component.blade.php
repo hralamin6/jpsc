@@ -3,9 +3,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <div class="h5">Manage sell</div>
-                </div>
-                <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">sell</li>
@@ -28,14 +25,18 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-2 col-3">
-                                    <input wire:model.lazy="paginate" type="number" class="form-control">
+                                    <input wire:model="paginate" type="number" class="form-control">
 
                                 </div>
-                                <div class="form-group col-md-2 col-6">
-                                    <input wire:model.lazy="search" type="date" class="form-control" placeholder="Search by date">
+                                <div class="form-group col-md-2 col-8">
+                                    <input wire:model="startDate" type="date" class="form-control">
+                                </div>to
+                                <div class="form-group col-md-2 col-8">
+                                    <input wire:model="endDate" type="date" class="form-control">
                                 </div>
                                 <div class="form-group col-md-2 col-3">
-                                    <input type="submit" class="btn btn-success" value="Filter">
+                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value="PDF">
+                                    <span wire:loading wire:target="generate_pdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </div>
                                 <div class="form-group col-md-2 col-12 float-right">
                                     @if($selections)
@@ -46,9 +47,8 @@
                                             </button>
                                             <div class="dropdown-menu" role="menu">
                                                 <a wire:click.prevent="confirmRemoval" class="dropdown-item" href="#">Delete Selected</a>
-                                                <a wire:click.prevent="activeStatus" class="dropdown-item" href="#">Mark as Active</a>
-                                                <a wire:click.prevent="inactiveStatus" class="dropdown-item" href="#">Mark as Inactive</a>
-
+{{--                                                <a wire:click.prevent="activeStatus" class="dropdown-item" href="#">Mark as Active</a>--}}
+{{--                                                <a wire:click.prevent="inactiveStatus" class="dropdown-item" href="#">Mark as Inactive</a>--}}
                                             </div>
                                         </div>
                                         <span wire:loading wire:target="confirmRemoval, inactiveStatus, activeStatus" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -81,9 +81,9 @@
                                     @forelse($sells as $key=>$sell)
                                         <tr @if (is_array($selections)) @if(in_array($sell->id, $selections)) class="bg-secondary" @endif @endif wire:key="row-{{ $sell->id }}">
                                             <td><input type="checkbox" value="{{ $sell->id }}" wire:model="selections"></td>
-                                            <td class="text-capitalize"><a href="">{{ $sell->product->name }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $sell->customer->name }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $sell->category->name }}</a></td>
+                                            <td class="text-capitalize"><a href="{{route('dashboard.products')}}">{{ $sell->product->name }}</a></td>
+                                            <td class="text-capitalize"><a href="{{route('dashboard.customers')}}">{{ $sell->customer->name }}</a></td>
+                                            <td class="text-capitalize"><a href="{{route('dashboard.categories')}}">{{ $sell->category->name }}</a></td>
                                             <td class="text-capitalize">{{ $sell->quantity }}</td>
                                             <td class="text-capitalize">{{ $sell->kg }}</td>
                                             <td class="text-capitalize">{{ $sell->unit_price }}</td>

@@ -22,9 +22,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(PaidAmount::class);
     }
-    public function sell()
+    public function sells()
     {
-        return $this->hasMany(Sell::class, 'user_id');
+        return $this->hasMany(Sell::class, 'user_id')->where('status', '=', 'active');
+    }
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class, 'user_id')->where('status', '=', 'active');
     }
     public function seller()
     {

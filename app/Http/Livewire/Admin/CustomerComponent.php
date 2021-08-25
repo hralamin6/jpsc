@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Setup;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class CustomerComponent extends Component
 {
@@ -103,6 +105,17 @@ class CustomerComponent extends Component
             $this->serialize = 'desc';
         }
     }
+    public function generate_pdf()
+    {
+        return response()->streamDownload(function () {
+            $customers = User::where('name', 'like', '%'.$this->search.'%')->where('type', 'customer')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
+            $setup = Setup::first();
+            $pdf = PDF::loadView('pdf.customers', compact('customers', 'setup'));
+            return $pdf->stream('document.pdf');
+        }, 'customers.pdf');
+
+    }
+
     public function render()
     {
         $customers = User::where('name', 'like', '%'.$this->search.'%')->where('type', 'customer')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);

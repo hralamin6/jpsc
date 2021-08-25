@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Sell;
+use App\Models\Setup;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class SellerComponent extends Component
 {
@@ -102,8 +105,19 @@ class SellerComponent extends Component
             $this->serialize = 'desc';
         }
     }
+    public function generate_pdf()
+    {
+        return response()->streamDownload(function () {
+            $sellers = User::where('name', 'like', '%'.$this->search.'%')->where('type', 'seller')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
+           $setup = Setup::first();
+            $pdf = PDF::loadView('pdf.sellers', compact('sellers', 'setup'));
+            return $pdf->stream('document.pdf');
+        }, 'sellers.pdf');
+
+    }
     public function render()
     {
+
         $sellers = User::where('name', 'like', '%'.$this->search.'%')->where('type', 'seller')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
         return view('livewire.admin.seller-component', compact('sellers'));
     }

@@ -3,9 +3,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <div class="h5">Manage purchase</div>
-                </div>
-                <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">purchase</li>
@@ -28,14 +25,18 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-2 col-3">
-                                    <input wire:model.lazy="paginate" type="number" class="form-control">
+                                    <input wire:model="paginate" type="number" class="form-control">
 
                                 </div>
-                                <div class="form-group col-md-2 col-6">
-                                    <input wire:model.lazy="search" type="date" class="form-control" placeholder="Search by date">
+                                <div class="form-group col-md-2 col-8">
+                                    <input wire:model="startDate" type="date" class="form-control">
+                                </div>to
+                                <div class="form-group col-md-2 col-8">
+                                    <input wire:model="endDate" type="date" class="form-control">
                                 </div>
                                 <div class="form-group col-md-2 col-3">
-                                    <input type="submit" class="btn btn-success" value="Filter">
+                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value="PDF">
+                                    <span wire:loading wire:target="generate_pdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </div>
                                 <div class="form-group col-md-2 col-12 float-right">
                                     @if($selections)
@@ -46,8 +47,8 @@
                                             </button>
                                             <div class="dropdown-menu" role="menu">
                                                 <a wire:click.prevent="confirmRemoval" class="dropdown-item" href="#">Delete Selected</a>
-                                                <a wire:click.prevent="activeStatus" class="dropdown-item" href="#">Mark as Active</a>
-                                                <a wire:click.prevent="inactiveStatus" class="dropdown-item" href="#">Mark as Inactive</a>
+{{--                                                <a wire:click.prevent="activeStatus" class="dropdown-item" href="#">Mark as Active</a>--}}
+{{--                                                <a wire:click.prevent="inactiveStatus" class="dropdown-item" href="#">Mark as Inactive</a>--}}
 
                                             </div>
                                         </div>
@@ -69,8 +70,6 @@
                                         <th wire:click.prevent="FilterSerialize('kg')">KG</th>
                                         <th wire:click.prevent="FilterSerialize('unit_price')">price</th>
                                         <th wire:click.prevent="FilterSerialize('total_price')">Total</th>
-                                        <th wire:click.prevent="FilterSerialize('paid_price')">Paid</th>
-                                        <th wire:click.prevent="FilterSerialize('due_price')">Due</th>
                                         <th wire:click.prevent="FilterSerialize('created_at')">Date</th>
                                         <th wire:click.prevent="FilterSerialize('status')">Status</th>
                                         <th>Action</th>
@@ -80,21 +79,21 @@
                                     @forelse($purchases as $key=>$purchase)
                                         <tr @if (is_array($selections)) @if(in_array($purchase->id, $selections)) class="bg-secondary" @endif @endif wire:key="row-{{ $purchase->id }}">
                                             <td><input type="checkbox" value="{{ $purchase->id }}" wire:model="selections"></td>
-                                            <td class="text-capitalize"><a href="">{{ $purchase->product->name }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $purchase->seller->name }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $purchase->category->name }}</a></td>
+                                            <td class="text-capitalize"><a href="{{route('dashboard.products')}}">{{ $purchase->product->name }}</a></td>
+                                            <td class="text-capitalize"><a href="{{route('dashboard.sellers')}}">{{ $purchase->seller->name }}</a></td>
+                                            <td class="text-capitalize"><a href="{{route('dashboard.categories')}}">{{ $purchase->category->name }}</a></td>
                                             <td class="text-capitalize">{{ $purchase->quantity }}</td>
                                             <td class="text-capitalize">{{ $purchase->kg }}</td>
                                             <td class="text-capitalize">{{ $purchase->unit_price }}</td>
                                             <td class="text-capitalize">{{ $purchase->total_price }}</td>
-                                            <td class="text-capitalize">{{ $purchase->paid_price }}</td>
-                                            <td class="text-capitalize">{{ $purchase->due_price }}</td>
                                             <td class="text-capitalize">{{ \Carbon\Carbon::parse($purchase->created_at)->format('Y-m-d') }}</td>
                                             <td>
-                                                <a class="text-capitalize badge {{ $purchase->status==='active'?'badge-success':'badge-danger' }}" wire:click.prevent="confirm_purchase({{ $purchase->id }})">{{ $purchase->status }}</a>
+                                                <a class="text-capitalize badge {{ $purchase->status==='active'?'badge-success':'badge-danger' }}" @if($purchase->status==='inactive') wire:click.prevent="confirm_purchase({{ $purchase->id }})" @endif>{{ $purchase->status }}</a>
                                             </td>
                                             <td>
+                                                @if($purchase->status==='inactive')
                                                 <a wire:click.prevent="Edit({{ $purchase->id }})"><i class="fa fa-edit text-pink"></i></a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty

@@ -4,12 +4,9 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard v2</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard v2</li>
+                        <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -24,21 +21,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary">
-                        <div class="card-header">
-                            <p class="card-title">Category</p>
-                        </div>
                         <form class="">
                             <div class="card-body row">
-                                <div class="form-group col-md-5 col-12">
-                                    <input wire:model.lazy="startDate" type="date" class="form-control">
+                                <div class="form-group col-md-6 col-6">
+                                    <input wire:model="startDate" type="date" class="form-control">
                                     @error('startDate') <span class="text-danger text-bold"> {{$message}}</span>@enderror
                                 </div>
-                                <div class="form-group col-md-5 col-12">
-                                    <input wire:model.lazy="endDate" type="date" class="form-control">
+                                <div class="form-group col-md-6 col-6">
+                                    <input wire:model="endDate" type="date" class="form-control">
                                     @error('endDate') <span class="text-danger text-bold"> {{$message}}</span>@enderror
-                                </div>
-                                <div class="form-group col-md-2 col-2">
-                                    <button wire:click.prevent="Search" type="button" class="btn btn-info" >Search<span wire:loading wire:target="Update" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>
                                 </div>
                             </div>
                         </form>

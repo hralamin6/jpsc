@@ -13,17 +13,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    Route::get('/',\App\Http\Livewire\HomeComponent::class)->name('home');
+//});
+
+    Route::get('shop',\App\Http\Livewire\HomeComponent::class)->name('home');
 
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
-    Route::get('/dashboard',\App\Http\Livewire\Admin\DashboardComponent::class)->name('dashboard');
-    Route::get('/dashboard/categories',\App\Http\Livewire\Admin\CategoryComponent::class)->name('dashboard.categories');
-    Route::get('/dashboard/customers',\App\Http\Livewire\Admin\CustomerComponent::class)->name('dashboard.customers');
-    Route::get('/dashboard/sellers',\App\Http\Livewire\Admin\SellerComponent::class)->name('dashboard.sellers');
-    Route::get('/dashboard/products',\App\Http\Livewire\Admin\ProductComponent::class)->name('dashboard.products');
-    Route::get('/dashboard/purchases',\App\Http\Livewire\Admin\PurchaseComponent::class)->name('dashboard.purchases');
-    Route::get('/dashboard/sells',\App\Http\Livewire\Admin\SellComponent::class)->name('dashboard.sells');
-    Route::get('/dashboard/customer/{id}',\App\Http\Livewire\Admin\CustomerPaymentComponent::class)->name('dashboard.customer.payment');
+    Route::get('/',\App\Http\Livewire\Admin\DashboardComponent::class)->name('dashboard');
+    Route::get('/categories',\App\Http\Livewire\Admin\CategoryComponent::class)->name('dashboard.categories');
+    Route::get('/customers',\App\Http\Livewire\Admin\CustomerComponent::class)->name('dashboard.customers');
+    Route::get('/sellers',\App\Http\Livewire\Admin\SellerComponent::class)->name('dashboard.sellers');
+    Route::get('/admins',\App\Http\Livewire\Admin\UserComponent::class)->name('dashboard.admins');
+    Route::get('/products',\App\Http\Livewire\Admin\ProductComponent::class)->name('dashboard.products');
+    Route::get('/purchases',\App\Http\Livewire\Admin\PurchaseComponent::class)->name('dashboard.purchases');
+    Route::get('/sells',\App\Http\Livewire\Admin\SellComponent::class)->name('dashboard.sells');
+    Route::get('/setup',\App\Http\Livewire\Admin\SetupComponent::class)->name('dashboard.setup');
+    Route::get('/profile',\App\Http\Livewire\Admin\ProfileComponent::class)->name('dashboard.profile');
+    Route::get('/customer/{id}',\App\Http\Livewire\Admin\CustomerPaymentComponent::class)->name('dashboard.customer.payment');
 });

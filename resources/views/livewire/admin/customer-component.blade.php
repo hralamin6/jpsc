@@ -3,9 +3,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <div class="h5">Manage customer</div>
-                </div>
-                <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">customer</li>
@@ -28,14 +25,15 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-2 col-3">
-                                    <input wire:model.lazy="paginate" type="number" class="form-control">
+                                    <input wire:model="paginate" type="number" class="form-control">
 
                                 </div>
                                 <div class="form-group col-md-2 col-6">
-                                    <input wire:model.lazy="search" type="text" class="form-control" placeholder="Search by name">
+                                    <input wire:model="search" type="text" class="form-control" placeholder="Search by name">
                                 </div>
                                 <div class="form-group col-md-2 col-3">
-                                    <input type="submit" class="btn btn-success" value="Filter">
+                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value="PDF">
+                                    <span wire:loading wire:target="generate_pdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </div>
                                 <div class="form-group col-md-2 col-12 float-right">
                                     @if($selections)
@@ -48,7 +46,6 @@
                                                 <a wire:click.prevent="confirmRemoval" class="dropdown-item" href="#">Delete Selected</a>
                                                 <a wire:click.prevent="activeStatus" class="dropdown-item" href="#">Mark as Active</a>
                                                 <a wire:click.prevent="inactiveStatus" class="dropdown-item" href="#">Mark as Inactive</a>
-
                                             </div>
                                         </div>
                                         <span wire:loading wire:target="confirmRemoval, inactiveStatus, activeStatus" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -63,6 +60,12 @@
                                         <th wire:click.prevent="FilterSerialize('name')">Name</th>
                                         <th wire:click.prevent="FilterSerialize('due_amount')">Due</th>
                                         <th wire:click.prevent="FilterSerialize('phone')">Phone</th>
+                                        <th>Purchases</th>
+                                        <th>Total Price</th>
+                                        <th>Paid Price</th>
+                                        <th>Total Quantity</th>
+                                        <th>Total Kg</th>
+                                        <th wire:click.prevent="FilterSerialize('address')">Address</th>
                                         <th wire:click.prevent="FilterSerialize('status')">Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -72,9 +75,16 @@
                                         <tr @if (is_array($selections)) @if(in_array($customer->id, $selections)) class="bg-secondary" @endif @endif wire:key="row-{{ $customer->id }}">
                                             <td><input type="checkbox" value="{{ $customer->id }}" wire:model="selections"></td>
                                             <td class="text-capitalize"><a href="{{route('dashboard.customer.payment', $customer->id)}}">{{ $customer->name }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $customer->due_amount }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $customer->phone }}</a></td>
-                                            <td><span class="text-capitalize badge {{ $customer->status==='active'?'badge-success':'badge-danger' }}" href="">{{ $customer->status }}</span></td><td>
+                                            <td>{{ $customer->due_amount }}</td>
+                                            <td><a href="tel:{{ $customer->phone }}">{{ $customer->phone }}</a></td>
+                                            <td>{{ $customer->sells->count() }}</td>
+                                            <td>{{ $customer->sells->sum('total_price') }}</td>
+                                            <td>{{ $customer->sells->sum('paid_price') }}</td>
+                                            <td>{{ $customer->sells->sum('quantity') }}</td>
+                                            <td>{{ $customer->sells->sum('kg') }}</td>
+                                            <td>{{ $customer->address }}</td>
+                                            <td><span class="text-capitalize badge {{ $customer->status==='active'?'badge-success':'badge-danger' }}">{{ $customer->status }}</span></td>
+                                            <td>
                                                 <a wire:click.prevent="Edit({{ $customer->id }})"><i class="fa fa-edit text-pink"></i></a>
                                             </td>
                                         </tr>

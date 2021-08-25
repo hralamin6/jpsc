@@ -1,20 +1,7 @@
-@push('css')
-    <style>
-        .table td.fit,
-        .table th.fit {
-            white-space: nowrap;
-            width: 1%;
-        }
-    </style>
-@endpush
-
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <div class="h5">Manage product</div>
-                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -38,14 +25,15 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-2 col-3">
-                                    <input wire:model.lazy="paginate" type="number" class="form-control">
+                                    <input wire:model="paginate" type="number" class="form-control">
 
                                 </div>
                                 <div class="form-group col-md-2 col-6">
-                                    <input wire:model.lazy="search" type="text" class="form-control" placeholder="Search by name">
+                                    <input wire:model="search" type="text" class="form-control" placeholder="Search by name">
                                 </div>
                                 <div class="form-group col-md-2 col-3">
-                                    <input type="submit" class="btn btn-success" value="Filter">
+                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value="PDF">
+                                    <span wire:loading wire:target="generate_pdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </div>
                                 <div class="form-group col-md-2 col-12 float-right">
                                     @if($selections)
@@ -90,22 +78,22 @@
                                     @forelse($products as $key=>$product)
                                         <tr @if (is_array($selections)) @if(in_array($product->id, $selections)) class="bg-secondary" @endif @endif wire:key="row-{{ $product->id }}">
                                             <td><input type="checkbox" value="{{ $product->id }}" wire:model="selections"></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->name }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->full_quantity }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->sell_quantity }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->stock_quantity }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->full_kg }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->sell_kg }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->stock_kg }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->sells()->sum('total_price') }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $product->purchases->sum('total_price') }}</a></td>
+                                            <td class="text-capitalize">{{ $product->name }}</td>
+                                            <td class="text-capitalize">{{ $product->full_quantity }}</td>
+                                            <td class="text-capitalize">{{ $product->sell_quantity }}</td>
+                                            <td class="text-capitalize">{{ $product->stock_quantity }}</td>
+                                            <td class="text-capitalize">{{ $product->full_kg }}</td>
+                                            <td class="text-capitalize">{{ $product->sell_kg }}</td>
+                                            <td class="text-capitalize">{{ $product->stock_kg }}</td>
+                                            <td class="text-capitalize">{{ $product->sells()->sum('total_price')}}</td>
+                                            <td class="text-capitalize">{{ $product->purchases->sum('total_price')}}</td>
                                             <td class="@if($product->sells->sum('total_price')-$product->purchases->sum('total_price')<0) text-danger @endif"><a href="">{{$product->sells->sum('total_price')-$product->purchases->sum('total_price') }}</a></td>
                                             <td><span class="text-capitalize badge {{ $product->status==='active'?'badge-success':'badge-danger' }}" href="">{{ $product->status }}</span></td><td>
                                                 <a wire:click.prevent="Edit({{ $product->id }})"><i class="fa fa-edit text-pink"></i></a>
                                             </td>
                                         </tr>
                                     @empty
-                                        <th class="text-center" colspan="6">No product found</th>
+                                        <th class="text-center" colspan="13">No product found</th>
                                     @endforelse
                                     </tbody>
                                 </table>

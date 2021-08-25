@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Category;
+use App\Models\Setup;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class CategoryComponent extends Component
 {
@@ -103,6 +106,17 @@ class CategoryComponent extends Component
             $this->serialize = 'desc';
         }
     }
+    public function generate_pdf()
+    {
+        return response()->streamDownload(function () {
+            $categories = Category::where('name', 'like', '%'.$this->search.'%')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
+            $setup = Setup::first();
+            $pdf = PDF::loadView('pdf.categories', compact('categories', 'setup'));
+            return $pdf->stream('document.pdf');
+        }, 'categories.pdf');
+
+    }
+
     public function render()
     {
         $categories = Category::where('name', 'like', '%'.$this->search.'%')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);

@@ -1,0 +1,9 @@
+/* your styles go here */
+.reset-anchor {
+    color: inherit;
+    transition: all 0.3s;
+}
+.reset-anchor:hover, .reset-anchor:focus {
+    color: #ef5285;
+    text-decoration: none;
+}

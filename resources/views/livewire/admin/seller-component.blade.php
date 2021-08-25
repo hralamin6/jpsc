@@ -3,9 +3,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <div class="h5">Manage seller</div>
-                </div>
-                <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">seller</li>
@@ -28,14 +25,15 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-2 col-3">
-                                    <input wire:model.lazy="paginate" type="number" class="form-control">
+                                    <input wire:model="paginate" type="number" class="form-control">
 
                                 </div>
                                 <div class="form-group col-md-2 col-6">
-                                    <input wire:model.lazy="search" type="text" class="form-control" placeholder="Search by name">
+                                    <input wire:model="search" type="text" class="form-control" placeholder="Search by name">
                                 </div>
                                 <div class="form-group col-md-2 col-3">
-                                    <input type="submit" class="btn btn-success" value="Filter">
+                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value="PDF">
+                                    <span wire:loading wire:target="generate_pdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </div>
                                 <div class="form-group col-md-2 col-12 float-right">
                                     @if($selections)
@@ -61,8 +59,12 @@
                                     <tr>
                                         <th><input type="checkbox" wire:model="selectall"></th>
                                         <th wire:click.prevent="FilterSerialize('name')">Name</th>
-                                        <th wire:click.prevent="FilterSerialize('payable_amount')">Payable</th>
                                         <th wire:click.prevent="FilterSerialize('phone')">Phone</th>
+                                        <th>Purchases</th>
+                                        <th>Total Price</th>
+                                        <th>Total Quantity</th>
+                                        <th>Total Kg</th>
+                                        <th wire:click.prevent="FilterSerialize('address')">Address</th>
                                         <th wire:click.prevent="FilterSerialize('status')">Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -72,14 +74,19 @@
                                         <tr @if (is_array($selections)) @if(in_array($seller->id, $selections)) class="bg-secondary" @endif @endif wire:key="row-{{ $seller->id }}">
                                             <td><input type="checkbox" value="{{ $seller->id }}" wire:model="selections"></td>
                                             <td class="text-capitalize"><a href="">{{ $seller->name }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $seller->payable_amount }}</a></td>
-                                            <td class="text-capitalize"><a href="">{{ $seller->phone }}</a></td>
-                                            <td><span class="text-capitalize badge {{ $seller->status==='active'?'badge-success':'badge-danger' }}" href="">{{ $seller->status }}</span></td><td>
+                                            <td><a href="tel:{{ $seller->phone }}">{{ $seller->phone }}</a></td>
+                                            <td>{{ $seller->purchases->count() }}</td>
+                                            <td>{{ $seller->purchases->sum('total_price') }}</td>
+                                            <td>{{ $seller->purchases->sum('quantity') }}</td>
+                                            <td>{{ $seller->purchases->sum('kg') }}</td>
+                                            <td>{{ $seller->address }}</td>
+                                            <td><span class="text-capitalize badge {{ $seller->status==='active'?'badge-success':'badge-danger' }}" href="">{{ $seller->status }}</span></td>
+                                            <td>
                                                 <a wire:click.prevent="Edit({{ $seller->id }})"><i class="fa fa-edit text-pink"></i></a>
                                             </td>
                                         </tr>
                                     @empty
-                                        <th class="text-center" colspan="6">No seller found</th>
+                                        <th class="text-center" colspan="10">No seller found</th>
                                     @endforelse
                                     </tbody>
                                 </table>

@@ -5,16 +5,20 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Category;
 use App\Models\PaidAmount;
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\Sell;
+use App\Models\Setup;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class SellComponent extends Component
 {
+    public $startDate, $endDate;
     use WithPagination;
     public $state = [], $sell, $editmode, $name, $orderBy='id', $serialize='desc', $paginate=10, $search='', $sellId, $selectall = false, $selections = [];
     protected $listeners = ['deleteConfirmed' => 'delete', 'sell_confirmed' => 'sell_confirmed'];
@@ -120,29 +124,33 @@ class SellComponent extends Component
     public function updatedSelectall($value)
     {
         if ($value){
-            $this->selections = Sell::where('created_at', 'like', '%'.$this->search.'%')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate)->pluck('id')->map(fn($id) =>(string) $id);
+            $this->selections = Sell::when($this->startDate, function($query) {
+                return $query->whereDate('created_at', '>=', Carbon::parse($this->startDate)->format('Y-m-d'));
+            })->when($this->endDate, function($query) {
+                return $query->whereDate('created_at', '<=', Carbon::parse($this->endDate)->format('Y-m-d'));
+            })->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate)->pluck('id')->map(fn($id) =>(string) $id);
         }else{
             $this->selections = [];
         }
     }
-    public function activeStatus()
-    {
-        foreach ($this->selections as $key => $selection) {
-            $sell = Sell::find($selection);
-            $sell->status = 'active';
-            $sell->save();
-        }
-        $this->alert('success', 'Successfully activated');
-    }
-    public function inactiveStatus()
-    {
-        foreach ($this->selections as $key => $selection) {
-            $sell = Sell::find($selection);
-            $sell->status = 'inactive';
-            $sell->save();
-        }
-        $this->alert('success', 'Successfully inactivated');
-    }
+//    public function activeStatus()
+//    {
+//        foreach ($this->selections as $key => $selection) {
+//            $sell = Sell::find($selection);
+//            $sell->status = 'active';
+//            $sell->save();
+//        }
+//        $this->alert('success', 'Successfully activated');
+//    }
+//    public function inactiveStatus()
+//    {
+//        foreach ($this->selections as $key => $selection) {
+//            $sell = Sell::find($selection);
+//            $sell->status = 'inactive';
+//            $sell->save();
+//        }
+//        $this->alert('success', 'Successfully inactivated');
+//    }
     public function FilterSerialize($filtername)
     {
         $this->orderBy = $filtername;
@@ -152,13 +160,30 @@ class SellComponent extends Component
             $this->serialize = 'desc';
         }
     }
+    public function generate_pdf()
+    {
+        return response()->streamDownload(function () {
+            $sells = Sell::when($this->startDate, function($query) {
+                return $query->whereDate('created_at', '>=', Carbon::parse($this->startDate)->format('Y-m-d'));
+            })->when($this->endDate, function($query) {
+                return $query->whereDate('created_at', '<=', Carbon::parse($this->endDate)->format('Y-m-d'));
+            })->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
+            $setup = Setup::first();
+            $pdf = PDF::loadView('pdf.sells', compact('sells', 'setup'));
+            return $pdf->stream('document.pdf');
+        }, 'sells.pdf');
+
+    }
+
     public function render()
     {
         $categories = Category::whereStatus('active')->get();
         $customers = User::whereStatus('active')->whereType('customer')->get();
         $products = Product::whereStatus('active')->get();
-        $sells = Sell::when($this->search, function($query) {
-            return $query->whereDate('created_at', '=', Carbon::parse($this->search)->format('Y-m-d'));
+        $sells = Sell::when($this->startDate, function($query) {
+            return $query->whereDate('created_at', '>=', Carbon::parse($this->startDate)->format('Y-m-d'));
+        })->when($this->endDate, function($query) {
+            return $query->whereDate('created_at', '<=', Carbon::parse($this->endDate)->format('Y-m-d'));
         })->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
         return view('livewire.admin.sell-component', compact('sells', 'categories', 'customers', 'products'));
     }

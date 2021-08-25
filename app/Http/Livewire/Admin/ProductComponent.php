@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\Product;
+use App\Models\Setup;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class ProductComponent extends Component
 {
@@ -94,8 +97,20 @@ class ProductComponent extends Component
             $this->serialize = 'desc';
         }
     }
+    public function generate_pdf()
+    {
+        return response()->streamDownload(function () {
+            $products = Product::where('name', 'like', '%'.$this->search.'%')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
+            $setup = Setup::first();
+            $pdf = PDF::loadView('pdf.products', compact('products', 'setup'));
+            return $pdf->stream('document.pdf');
+        }, 'products.pdf');
+
+    }
+
     public function render()
     {
+
         $products = Product::where('name', 'like', '%'.$this->search.'%')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
         return view('livewire.admin.product-component', compact('products'));
     }
