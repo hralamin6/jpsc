@@ -21,7 +21,7 @@
             color: #212529;
             text-align: left;
             background-color: #fff;
-            font-size: 10px;
+            font-size: 15px;
             margin: 36pt;
         }
 

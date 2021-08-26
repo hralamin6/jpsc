@@ -62,18 +62,18 @@
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" wire:model="selectall"></th>
-                                        <th wire:click.prevent="FilterSerialize('name')">Name</th>
-                                        <th wire:click.prevent="FilterSerialize('full_quantity')">Full Q</th>
-                                        <th wire:click.prevent="FilterSerialize('sell_quantity')">Sell Q</th>
-                                        <th wire:click.prevent="FilterSerialize('stock_quantity')">Stock Q</th>
-                                        <th wire:click.prevent="FilterSerialize('full_kg')">Full Kg</th>
-                                        <th wire:click.prevent="FilterSerialize('sell_kg')">Sell Kg</th>
-                                        <th wire:click.prevent="FilterSerialize('stock_kg')">Stock Kg</th>
-                                        <th>Full Sell</th>
-                                        <th>Full Buy</th>
-                                        <th>Earn</th>
-                                        <th wire:click.prevent="FilterSerialize('status')">Status</th>
-                                        <th>Action</th>
+                                        <th wire:click.prevent="FilterSerialize('name')">{{__('Name')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('full_quantity')">{{__('Total')}} {{__('Quantity')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('sell_quantity')">{{__('Sell')}} {{__('Quantity')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('stock_quantity')">{{__('Stock')}} {{__('Quantity')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('full_kg')">{{__('Total')}} {{__('KG')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('sell_kg')">{{__('Sell')}} {{__('KG')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('stock_kg')">{{__('Stock')}} {{__('KG')}}</th>
+                                        <th>{{__('Total')}} {{__('Sell')}}</th>
+                                        <th>{{__('Total')}} {{__('Purchase')}}</th>
+                                        <th>{{__('Earn')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('status')">{{__('Status')}}</th>
+                                        <th>{{__('Action')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -81,12 +81,12 @@
                                         <tr @if (is_array($selections)) @if(in_array($product->id, $selections)) class="bg-secondary" @endif @endif wire:key="row-{{ $product->id }}">
                                             <td><input type="checkbox" value="{{ $product->id }}" wire:model="selections"></td>
                                             <td class="text-capitalize">{{ $product->name }}</td>
-                                            <td class="text-capitalize">{{ $product->full_quantity }}</td>
-                                            <td class="text-capitalize">{{ $product->sell_quantity }}</td>
-                                            <td class="text-capitalize">{{ $product->stock_quantity }}</td>
-                                            <td class="text-capitalize">{{ $product->full_kg }}</td>
-                                            <td class="text-capitalize">{{ $product->sell_kg }}</td>
-                                            <td class="text-capitalize">{{ $product->stock_kg }}</td>
+                                            <td class="text-capitalize">{{ $product->full_quantity }} {{__('piece')}}</td>
+                                            <td class="text-capitalize">{{ $product->sell_quantity }} {{__('piece')}}</td>
+                                            <td class="text-capitalize">{{ $product->stock_quantity }} {{__('piece')}}</td>
+                                            <td class="text-capitalize">{{ $product->full_kg }} {{__('kg')}}</td>
+                                            <td class="text-capitalize">{{ $product->sell_kg }} {{__('kg')}}</td>
+                                            <td class="text-capitalize">{{ $product->stock_kg }} {{__('kg')}}</td>
                                             <td class="text-capitalize">{{ $product->sells()->sum('total_price')}}</td>
                                             <td class="text-capitalize">{{ $product->purchases->sum('total_price')}}</td>
                                             <td class="@if($product->sells->sum('total_price')-$product->purchases->sum('total_price')<0) text-danger @endif"><a href="">{{$product->sells->sum('total_price')-$product->purchases->sum('total_price') }}</a></td>

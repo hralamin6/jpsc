@@ -18,11 +18,10 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i>
-                                {{__('Add')}}
+                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i>{{__('Add')}}
                                 <span wire:loading wire:target="addNew" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             </button>
-                            <p class="card-title">{{ __('All').' '. __('Sellers').' '. __('managment') }}</p>
+                            <p class="card-title">{{ __('All').' '. __('Sell').' '. __('managment') }}</p>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -65,19 +64,19 @@
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" wire:model="selectall"></th>
-                                        <th wire:click.prevent="FilterSerialize('product_id')">Product</th>
-                                        <th wire:click.prevent="FilterSerialize('user_id')">Customer</th>
-                                        <th wire:click.prevent="FilterSerialize('category_id')">Size</th>
-                                        <th wire:click.prevent="FilterSerialize('quantity')">Quantity</th>
-                                        <th wire:click.prevent="FilterSerialize('kg')">KG</th>
-                                        <th wire:click.prevent="FilterSerialize('unit_price')">price</th>
-                                        <th wire:click.prevent="FilterSerialize('total_price')">Total</th>
-                                        <th wire:click.prevent="FilterSerialize('paid_price')">Paid</th>
-                                        <th wire:click.prevent="FilterSerialize('due_price')">Due</th>
-                                        <th wire:click.prevent="FilterSerialize('created_at')">Date</th>
-                                        <th wire:click.prevent="FilterSerialize('status')">Status</th>
-                                        <th wire:click.prevent="FilterSerialize('price_status')">Paid Status</th>
-                                        <th>Action</th>
+                                        <th wire:click.prevent="FilterSerialize('product_id')">{{ __('Product')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('user_id')">{{ __('Customer')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('category_id')">{{ __('Size')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('quantity')">{{ __('Quantity')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('kg')">{{ __('KG')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('unit_price')">{{ __('Price')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('total_price')">{{ __('Total')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('paid_price')">{{ __('Paid')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('due_price')">{{ __('Due')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('created_at')">{{ __('Date')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('status')">{{ __('Status')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('price_status')">{{ __('Paid')}} {{ __('Status')}}</th>
+                                        <th>{{__('Action')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>

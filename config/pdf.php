@@ -9,7 +9,7 @@ return [
             'I'  => 'Nikosh.ttf',     // optional: italic font
             'BI' => 'Nikosh.ttf', // optional: bold-italic font
             'useOTL' => 0xFF,
-            'useKashida' => 75,
+            'useKashida' => 222,
         ],
     ],
 	'mode'                  => 'utf-8',

@@ -23,16 +23,16 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th wire:click.prevent="FilterSerialize('name')">Name</th>
-                                    <th wire:click.prevent="FilterSerialize('due_amount')">Due</th>
-                                    <th wire:click.prevent="FilterSerialize('phone')">Phone</th>
-                                    <th>Purchases</th>
-                                    <th>Total Price</th>
-                                    <th>Paid Price</th>
-                                    <th>Total Quantity</th>
-                                    <th>Total Kg</th>
-                                    <th wire:click.prevent="FilterSerialize('address')">Address</th>
-                                    <th wire:click.prevent="FilterSerialize('status')">Status</th>
+                                    <th wire:click.prevent="FilterSerialize('name')">{{__('Name')}}</th>
+                                    <th wire:click.prevent="FilterSerialize('due_amount')">{{__('Due')}}</th>
+                                    <th wire:click.prevent="FilterSerialize('phone')">{{__('Phone')}}</th>
+                                    <th>{{__('Purchases')}}</th>
+                                    <th>{{__('Total')}} {{__('Price')}}</th>
+                                    <th>{{__('Paid')}} {{__('Price')}}</th>
+                                    <th>{{__('Total')}} {{__('Quantity')}}</th>
+                                    <th>{{__('Total')}} {{__('KG')}}</th>
+                                    <th wire:click.prevent="FilterSerialize('address')">{{__('Address')}}</th>
+                                    <th wire:click.prevent="FilterSerialize('status')">{{__('Status')}}</th>
                                 </tr>
                                 </thead>
                                 <div class="progress"><div class="progress-bar" style="width:{{@$data['progressBar']}}%"></div></div>

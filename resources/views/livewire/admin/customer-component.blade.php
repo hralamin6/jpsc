@@ -4,8 +4,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">customer</li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{__('Dashboard') }}</a></li>
+                        <li class="breadcrumb-item active">{{__('Customers') }}</li>
                     </ol>
                 </div>
             </div>
@@ -18,10 +18,10 @@
                     <div class="card">
 
                         <div class="card-header">
-                                <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add customer
-                                    <span wire:loading wire:target="addNew" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                </button>
-                            <p class="card-title">Manage your all customers</p>
+                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i>{{__('Add')}}
+                                <span wire:loading wire:target="addNew" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
+                            <p class="card-title">{{ __('All').' '. __('Customers').' '. __('managment') }}</p>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -34,7 +34,7 @@
                                     <input wire:model="search" type="text" class="form-control" placeholder="Search by name">
                                 </div>
                                 <div class="form-group col-md-2 col-3">
-                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value="PDF">
+                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value="{{__('PDF')}}">
                                     <span wire:loading wire:target="generate_pdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </div>
                                 <div class="form-group col-md-2 col-12 float-right">
@@ -59,17 +59,17 @@
                                     <thead>
                                     <tr>
                                         <th><input type="checkbox" wire:model="selectall"></th>
-                                        <th wire:click.prevent="FilterSerialize('name')">Name</th>
-                                        <th wire:click.prevent="FilterSerialize('due_amount')">Due</th>
-                                        <th wire:click.prevent="FilterSerialize('phone')">Phone</th>
-                                        <th>Purchases</th>
-                                        <th>Total Price</th>
-                                        <th>Paid Price</th>
-                                        <th>Total Quantity</th>
-                                        <th>Total Kg</th>
-                                        <th wire:click.prevent="FilterSerialize('address')">Address</th>
-                                        <th wire:click.prevent="FilterSerialize('status')">Status</th>
-                                        <th>Action</th>
+                                        <th wire:click.prevent="FilterSerialize('name')">{{__('Name')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('due_amount')">{{__('Due')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('phone')">{{__('Phone')}}</th>
+                                        <th>{{__('Purchases')}}</th>
+                                        <th>{{__('Total')}} {{__('Price')}}</th>
+                                        <th>{{__('Paid')}} {{__('Price')}}</th>
+                                        <th>{{__('Total')}} {{__('Quantity')}}</th>
+                                        <th>{{__('Total')}} {{__('KG')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('address')">{{__('Address')}}</th>
+                                        <th wire:click.prevent="FilterSerialize('status')">{{__('Status')}}</th>
+                                        <th>{{__('Action')}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -92,7 +92,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <th class="text-center" colspan="12">No customer found</th>
+                                        <th class="text-center" colspan="12">{{__('No customer found')}}</th>
                                     @endforelse
                                     </tbody>
                                 </table>
