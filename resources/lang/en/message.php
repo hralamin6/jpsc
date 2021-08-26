@@ -1,0 +1,13 @@
+<?php
+
+
+
+return [
+
+
+
+    'shop' => 'Shoop',
+
+
+
+];

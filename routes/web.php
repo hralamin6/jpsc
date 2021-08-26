@@ -32,3 +32,5 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
     Route::get('/profile',\App\Http\Livewire\Admin\ProfileComponent::class)->name('dashboard.profile');
     Route::get('/customer/{id}',\App\Http\Livewire\Admin\CustomerPaymentComponent::class)->name('dashboard.customer.payment');
 });
+Route::get('lang/home', [\App\Http\Controllers\LangController::class, 'index']);
+Route::post('lang/change', [\App\Http\Controllers\LangController::class, 'change'])->name('changeLang');

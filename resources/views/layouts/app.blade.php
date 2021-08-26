@@ -77,8 +77,10 @@
 {{--    <div class="preloader flex-column justify-content-center align-items-center">--}}
 {{--        <img class="animation__wobble" src="{{ asset('backend') }}/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width  ="60">--}}
 {{--    </div>--}}
-@include('layouts.app.navbar')
-@include('layouts.app.sidebar')
+{{--@include('layouts.app.navbar')--}}
+{{--@include('layouts.app.sidebar')--}}
+    @livewire('header-component')
+    @livewire('sidebar-component')
 {{ $slot }}
     <footer class="main-footer">
         <strong>Copyright &copy; {{date('Y')}} <a href="{{config('app.url')}}">{{config('app.name')}}</a>.</strong>

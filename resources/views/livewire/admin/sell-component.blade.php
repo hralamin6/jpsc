@@ -4,8 +4,8 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">sell</li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{__('Dashboard') }}</a></li>
+                        <li class="breadcrumb-item active">{{__('Sells') }}</li>
                     </ol>
                 </div>
             </div>
@@ -18,10 +18,11 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add sell
+                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i>
+                                {{__('Add')}}
                                 <span wire:loading wire:target="addNew" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             </button>
-                            <p class="card-title">Manage your all sells</p>
+                            <p class="card-title">{{ __('All').' '. __('Sellers').' '. __('managment') }}</p>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -32,12 +33,12 @@
                                 </div>
                                 <div class="form-group col-md-2 col-8">
                                     <input wire:model="startDate" type="date" class="form-control">
-                                </div>to
+                                </div> {{__('to')}}
                                 <div class="form-group col-md-2 col-8">
                                     <input wire:model="endDate" type="date" class="form-control">
                                 </div>
                                 <div class="form-group col-md-2 col-3">
-                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value="PDF">
+                                    <input wire:click.prevent="generate_pdf" type="button" class="btn btn-info" value=" {{__('PDF')}}">
                                     <span wire:loading wire:target="generate_pdf" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 </div>
                                 <div class="form-group col-md-2 col-12 float-right">
@@ -107,7 +108,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        <th class="text-center" colspan="14">No sell found</th>
+                                        <th class="text-center" colspan="14">{{__('No sell found')}}</th>
                                     @endforelse
                                     </tbody>
                                 </table>
