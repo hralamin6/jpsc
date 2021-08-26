@@ -18,7 +18,9 @@
                     <div class="card">
 
                         <div class="card-header">
-                                <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add customer</button>
+                                <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add customer
+                                    <span wire:loading wire:target="addNew" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button>
                             <p class="card-title">Manage your all customers</p>
                         </div>
                         <!-- /.card-header -->
@@ -86,10 +88,11 @@
                                             <td><span class="text-capitalize badge {{ $customer->status==='active'?'badge-success':'badge-danger' }}">{{ $customer->status }}</span></td>
                                             <td>
                                                 <a wire:click.prevent="Edit({{ $customer->id }})"><i class="fa fa-edit text-pink"></i></a>
+                                                <span wire:loading wire:target="Edit({{ $customer->id }})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                             </td>
                                         </tr>
                                     @empty
-                                        <th class="text-center" colspan="6">No customer found</th>
+                                        <th class="text-center" colspan="12">No customer found</th>
                                     @endforelse
                                     </tbody>
                                 </table>
@@ -148,6 +151,7 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times mr-1"></i> Cancel</button>
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save mr-1"></i>
                             @if($editmode)<span>Save Changes</span>@else<span>Save</span>@endif
+                            <span wire:loading wire:target="update_customer,create_customer" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         </button>
                     </div>
                 </div>

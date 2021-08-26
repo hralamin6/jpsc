@@ -18,7 +18,9 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add admin</button>
+                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add admin
+                                <span wire:loading wire:target="addNew" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
                             <p class="card-title">Manage your all admins</p>
                         </div>
                         <!-- /.card-header -->
@@ -71,6 +73,8 @@
                                             <td class="text-capitalize"><a href="">{{ $admin->phone }}</a></td>
                                             <td><span class="text-capitalize badge {{ $admin->status==='active'?'badge-success':'badge-danger' }}" href="">{{ $admin->status }}</span></td><td>
                                                 <a wire:click.prevent="Edit({{ $admin->id }})"><i class="fa fa-edit text-pink"></i></a>
+                                                <span wire:loading wire:target="Edit({{ $admin->id }})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
                                             </td>
                                         </tr>
                                     @empty
@@ -133,6 +137,8 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times mr-1"></i> Cancel</button>
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save mr-1"></i>
                             @if($editmode)<span>Save Changes</span>@else<span>Save</span>@endif
+                            <span wire:loading wire:target="update_admin,create_admin" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
                         </button>
                     </div>
                 </div>

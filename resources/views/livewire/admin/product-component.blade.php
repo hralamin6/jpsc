@@ -18,7 +18,9 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add product</button>
+                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add product
+                                <span wire:loading wire:target="addNew" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
                             <p class="card-title">Manage your all Products</p>
                         </div>
                         <!-- /.card-header -->
@@ -90,6 +92,8 @@
                                             <td class="@if($product->sells->sum('total_price')-$product->purchases->sum('total_price')<0) text-danger @endif"><a href="">{{$product->sells->sum('total_price')-$product->purchases->sum('total_price') }}</a></td>
                                             <td><span class="text-capitalize badge {{ $product->status==='active'?'badge-success':'badge-danger' }}" href="">{{ $product->status }}</span></td><td>
                                                 <a wire:click.prevent="Edit({{ $product->id }})"><i class="fa fa-edit text-pink"></i></a>
+                                                <span wire:loading wire:target="Edit({{ $product->id }})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
                                             </td>
                                         </tr>
                                     @empty
@@ -136,6 +140,8 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times mr-1"></i> Cancel</button>
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save mr-1"></i>
                             @if($editmode)<span>Save Changes</span>@else<span>Save</span>@endif
+                            <span wire:loading wire:target="update_product,create_product" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
                         </button>
                     </div>
                 </div>

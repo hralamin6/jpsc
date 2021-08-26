@@ -18,7 +18,9 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add purchase</button>
+                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add purchase
+                                <span wire:loading wire:target="addNew" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
                             <p class="card-title">Manage your all purchases</p>
                         </div>
                         <!-- /.card-header -->
@@ -93,6 +95,8 @@
                                             <td>
                                                 @if($purchase->status==='inactive')
                                                 <a wire:click.prevent="Edit({{ $purchase->id }})"><i class="fa fa-edit text-pink"></i></a>
+                                                    <span wire:loading wire:target="Edit({{ $purchase->id }})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
                                                 @endif
                                             </td>
                                         </tr>
@@ -185,6 +189,8 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times mr-1"></i> Cancel</button>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-save mr-1"></i>
                                 @if($editmode)<span>Save Changes</span>@else<span>Save</span>@endif
+                                <span wire:loading wire:target="update_purchase,create_purchase" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
                             </button>
                         </div>
                     </div>

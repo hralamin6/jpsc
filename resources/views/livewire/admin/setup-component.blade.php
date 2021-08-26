@@ -113,7 +113,9 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-save mr-1"></i>Save changes</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-save mr-1"></i>Save changes
+                                    <span wire:loading wire:target="updateSetting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button>
                             </div>
                         </form>
                     </div>

@@ -18,7 +18,9 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add sell</button>
+                            <button  wire:click.prevent="addNew" class="btn btn-primary float-right"><i class="fa fa-plus-circle mr-1"></i> Add sell
+                                <span wire:loading wire:target="addNew" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
                             <p class="card-title">Manage your all sells</p>
                         </div>
                         <!-- /.card-header -->
@@ -98,7 +100,10 @@
                                                 <span class="text-capitalize badge @if($sell->status==='fullpaid') badge-success @elseif($sell->status==='subpaid') badge-warning @else badge-danger @endif ">{{ $sell->price_status }}</span>
                                             </td>
                                             <td>
+                                                @if($sell->status==='inactive')
                                                 <a wire:click.prevent="Edit({{ $sell->id }})"><i class="fa fa-edit text-pink"></i></a>
+                                                    <span wire:loading wire:target="Edit({{ $sell->id }})" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty
@@ -185,6 +190,8 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times mr-1"></i> Cancel</button>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-save mr-1"></i>
                                 @if($editmode)<span>Save Changes</span>@else<span>Save</span>@endif
+                                <span wire:loading wire:target="update_sell,create_sell" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
                             </button>
                         </div>
                     </div>

@@ -80,7 +80,9 @@
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
-                                        <button wire:click.prevent="Update" type="button" id="submit" name="submit" class="btn btn-primary">Update</button>
+                                        <button wire:click.prevent="Update" type="button" id="submit" name="submit" class="btn btn-primary">Update
+                                            <span wire:loading wire:target="Update" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +108,9 @@
                             <div class="row gutters">
                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="text-right">
-                                        <button wire:click.prevent="ChangePassword" type="button" class="btn btn-primary">Change Password</button>
+                                        <button wire:click.prevent="ChangePassword" type="button" class="btn btn-primary">Change Password
+                                            <span wire:loading wire:target="ChangePassword" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
