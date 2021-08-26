@@ -1,11 +1,16 @@
 <?php
 
 return [
-    'custom_font_dir' => base_path('resources/fonts/'),
-    'custom_font_data' => [
-				"nikosh" => [
-					'R' => "Nikosh.ttf",
-				],
+    'font_path' => base_path('resources/fonts/'),
+    'font_data' => [
+        'examplefont' => [
+            'R'  => 'Nikosh.ttf',    // regular font
+            'B'  => 'Nikosh.ttf',       // optional: bold font
+            'I'  => 'Nikosh.ttf',     // optional: italic font
+            'BI' => 'Nikosh.ttf', // optional: bold-italic font
+            'useOTL' => 0xFF,
+            'useKashida' => 75,
+        ],
     ],
 	'mode'                  => 'utf-8',
 	'format'                => 'A4',

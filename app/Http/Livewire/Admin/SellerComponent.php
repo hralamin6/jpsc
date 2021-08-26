@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Mpdf\Mpdf;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class SellerComponent extends Component
@@ -107,6 +108,8 @@ class SellerComponent extends Component
     }
     public function generate_pdf()
     {
+//        $mpdf = new Mpdf(['mode'=>'UTF-8', 'format'=>'A4-P', 'autoScriptToLang'=>true, 'autoLangToFont'=>true]);
+
         return response()->streamDownload(function () {
             $sellers = User::where('name', 'like', '%'.$this->search.'%')->where('type', 'seller')->orderBy($this->orderBy, $this->serialize)->paginate($this->paginate);
            $setup = Setup::first();
