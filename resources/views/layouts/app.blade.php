@@ -56,15 +56,15 @@
     <script src="{{ secure_asset('backend') }}/plugins/jquery/jquery.min.js" defer></script>
     <script src="{{ secure_asset('backend') }}/plugins/bootstrap/js/bootstrap.bundle.min.js" defer></script>
     <script src="{{ secure_asset('backend') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js" defer></script>
-    <script src="{{ secure_asset('backend') }}/dist/js/adminlte.js" defer></script>
     <script src="{{ secure_asset('backend') }}/plugins/jquery-mousewheel/jquery.mousewheel.js" defer></script>
     <script src="{{ secure_asset('backend') }}/plugins/raphael/raphael.min.js" defer></script>
     <script src="{{ secure_asset('backend') }}/plugins/jquery-mapael/jquery.mapael.min.js" defer></script>
     <script src="{{ secure_asset('backend') }}/plugins/jquery-mapael/maps/usa_states.min.js" defer></script>
     <script src="{{ secure_asset('backend') }}/plugins/chart.js/Chart.min.js" defer></script>
-    <script src="{{ secure_asset('backend') }}/dist/js/demo.js" defer></script>
-    <script src="{{ secure_asset('backend') }}/dist/js/pages/dashboard2.js" defer></script>
     <script src="{{ secure_asset('backend') }}/plugins/sweetalert2/sweetalert2.min.js"  defer></script>
+    <script src="{{ secure_asset('backend') }}/dist/js/demo.js" defer></script>
+    <script src="{{ secure_asset('backend') }}/dist/js/adminlte.js" defer></script>
+    <script src="{{ secure_asset('backend') }}/dist/js/pages/dashboard2.js" defer></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js" ></script>
     <script src="{{ mix('js/app.js') }}" data-turbolinks-track="reload"></script>
