@@ -27,9 +27,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
     <link rel="stylesheet" href="{{ asset('backend') }}/plugins/fontawesome-free/css/all.min.css">
-{{--    <link rel="stylesheet" href="{{ asset('backend') }}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">--}}
-{{--    <link rel="stylesheet" href="{{ asset('backend') }}/dist/css/adminlte.min.css">--}}
-{{--    <link rel="stylesheet" href="{{ asset('backend') }}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">--}}
+    <link rel="stylesheet" href="{{ asset('backend') }}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="{{ asset('backend') }}/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="{{ asset('backend') }}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 
     <link rel="stylesheet" href="{{ secure_asset('backend') }}/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="{{ secure_asset('backend') }}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
@@ -40,18 +40,18 @@
     @stack('css')
     @livewireStyles
 
-{{--    <script src="{{ asset('backend') }}/plugins/jquery/jquery.min.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/dist/js/adminlte.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/plugins/raphael/raphael.min.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/plugins/jquery-mapael/jquery.mapael.min.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/plugins/jquery-mapael/maps/usa_states.min.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/plugins/chart.js/Chart.min.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/dist/js/demo.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/dist/js/pages/dashboard2.js"></script>--}}
-{{--    <script src="{{ asset('backend') }}/plugins/sweetalert2/sweetalert2.min.js" ></script>--}}
+    <script src="{{ asset('backend') }}/plugins/jquery/jquery.min.js"></script>
+    <script src="{{ asset('backend') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('backend') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="{{ asset('backend') }}/dist/js/adminlte.js"></script>
+    <script src="{{ asset('backend') }}/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="{{ asset('backend') }}/plugins/raphael/raphael.min.js"></script>
+    <script src="{{ asset('backend') }}/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="{{ asset('backend') }}/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <script src="{{ asset('backend') }}/plugins/chart.js/Chart.min.js"></script>
+    <script src="{{ asset('backend') }}/dist/js/demo.js"></script>
+    <script src="{{ asset('backend') }}/dist/js/pages/dashboard2.js"></script>
+    <script src="{{ asset('backend') }}/plugins/sweetalert2/sweetalert2.min.js" ></script>
 
     <script src="{{ secure_asset('backend') }}/plugins/jquery/jquery.min.js" defer></script>
     <script src="{{ secure_asset('backend') }}/plugins/bootstrap/js/bootstrap.bundle.min.js" defer></script>
