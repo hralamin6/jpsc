@@ -26,7 +26,7 @@ class CreateSetupsTable extends Migration
             $table->string('facebook')->nullable()->default('http://facebook.com');
             $table->string('twitter')->nullable()->default('http://twitter.com');
             $table->string('youtube')->nullable()->default('http://youtube.com');
-            $table->text('about')->nullable()->default('asdfa saerawerfasdfadsf');
+            $table->string('about')->nullable()->default('asdfa saerawerfasdfadsf');
             $table->timestamps();
         });
     }
