@@ -41,9 +41,14 @@ class LoginComponent extends Component
         return redirect()->intended(route('home'));
     }
 
+    public function asdf()
+    {
+
+        dd('asdf');
+    }
     public function render()
     {
 
-        return view('livewire.login-component')->extends('layouts.auth');
+        return view('livewire.login-component')->layout('layouts.base');
     }
 }

@@ -1,11 +1,10 @@
-@section('title', 'Sign in to your account')
 
 <div>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         {{--        <a href="{{ route('home') }}">--}}
         {{--            <x-logo class="w-auto h-16 mx-auto text-indigo-600" />--}}
         {{--        </a>--}}
-        <a href="{{ route('home') }}">
+        <a wire:click.prevent="asdf">
             <div class="">
                 <center>
                     <span class="bg-transparent text-secondary p-2 rounded-md shadow-lg">Atom</span>

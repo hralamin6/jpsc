@@ -10,23 +10,20 @@
         <title>{{ config('app.name') }}</title>
     @endif
     <link rel="shortcut icon" href="{{ url(asset('favicon.ico')) }}">
-    {{--        <link rel="stylesheet" href="https://rsms.me/inter/inter.css">--}}
-    <link rel="stylesheet" href="{{ asset('css/tw.css') }}">
     <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}">
     @livewireStyles
-    {{--        <script src="{{ asset('js/echo.js') }}"></script>--}}
     <script src="{{ url(mix('js/app.js')) }}" defer></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
-@yield('body')
+{{--@yield('body')--}}
+{{ $slot }}
+@stack('js')
 
-@livewireScripts
-{{--        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
-<script src="{{ asset('js/sa.js') }}"></script>
 <x-livewire-alert::scripts />
-<script src="{{ asset('js/spa.js') }}" data-turbolinks-eval="false"></script>
+@livewireScripts
+<script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false"></script>
 
 </body>
 </html>
