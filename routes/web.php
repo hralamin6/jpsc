@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('shop',\App\Http\Livewire\HomeComponent::class)->name('home');
 
 Route::middleware('guest')->group(function () {
-    Route::get('login', \App\Http\Livewire\Auth\Login::class)->name('login');
+    Route::get('login', \App\Http\Livewire\LoginComponent::class)->name('login');
 
 });
 
