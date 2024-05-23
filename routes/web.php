@@ -19,7 +19,14 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('shop',\App\Http\Livewire\HomeComponent::class)->name('home');
 
-Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
+Route::middleware('guest')->group(function () {
+    Route::get('login', \App\Http\Livewire\Auth\Login::class)->name('login');
+
+});
+
+
+
+Route::middleware('auth')->group(function () {
     Route::get('/',\App\Http\Livewire\Admin\DashboardComponent::class)->name('dashboard');
     Route::get('/categories',\App\Http\Livewire\Admin\CategoryComponent::class)->name('dashboard.categories');
     Route::get('/customers',\App\Http\Livewire\Admin\CustomerComponent::class)->name('dashboard.customers');
@@ -34,3 +41,7 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
 });
 Route::get('lang/home', [\App\Http\Controllers\LangController::class, 'index']);
 Route::post('lang/change', [\App\Http\Controllers\LangController::class, 'change'])->name('changeLang');
+Route::get('/logout', function () {
+    \Illuminate\Support\Facades\Auth::logout();
+    return redirect(route('home'));
+})->name('logout');
