@@ -5,12 +5,15 @@ namespace App\Http\Livewire\Admin;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class UserComponent extends Component
 {
     use WithPagination;
+    use LivewireAlert;
+
     public $state = [], $admin, $editmode, $name, $orderBy='id', $serialize='desc', $paginate=10, $search='', $adminId, $selectall = false, $selections = [];
     protected $listeners = ['deleteConfirmed' => 'delete'];
 

@@ -12,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
@@ -20,6 +21,8 @@ class SellComponent extends Component
 {
     public $startDate, $endDate;
     use WithPagination;
+    use LivewireAlert;
+
     public $state = [], $sell, $editmode, $name, $orderBy='id', $serialize='desc', $paginate=10, $search='', $sellId, $selectall = false, $selections = [];
     protected $listeners = ['deleteConfirmed' => 'delete', 'sell_confirmed' => 'sell_confirmed'];
 

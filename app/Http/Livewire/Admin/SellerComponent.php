@@ -7,6 +7,7 @@ use App\Models\Setup;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mpdf\Mpdf;
@@ -15,6 +16,8 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 class SellerComponent extends Component
 {
     use WithPagination;
+    use LivewireAlert;
+
     public $state = [], $seller, $editmode, $name, $orderBy='id', $serialize='desc', $paginate=10, $search='', $sellerId, $selectall = false, $selections = [];
     protected $listeners = ['deleteConfirmed' => 'delete'];
 

@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
@@ -17,6 +18,8 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 class PurchaseComponent extends Component
 {
     use WithPagination;
+    use LivewireAlert;
+
     public $startDate, $endDate;
     public $state = [], $purchase, $editmode, $name, $orderBy='id', $serialize='desc', $paginate=10, $search='', $purchaseId, $selectall = false, $selections = [];
     protected $listeners = ['deleteConfirmed' => 'delete', 'purchase_confirmed' => 'purchase_confirmed'];

@@ -6,10 +6,13 @@ use App\Models\Setup;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class SetupComponent extends Component
 {
+    use LivewireAlert;
+
     public $nightMode, $sidebarCollapse;
     public $state = [];
 

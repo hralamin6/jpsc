@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Setup;
 use App\Models\User;
 use Illuminate\Validation\Rule;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -14,6 +15,9 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 class CategoryComponent extends Component
 {
     use WithPagination;
+    use LivewireAlert;
+
+
     public $editmode, $name, $orderBy='id', $serialize='desc', $paginate=10, $search='', $categoryId, $selectall = false, $selections = [];
     protected $listeners = ['deleteConfirmed' => 'delete'];
 

@@ -7,6 +7,7 @@ use App\Models\Sell;
 use App\Models\Setup;
 use App\Models\User;
 use Carbon\Carbon;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mpdf\Mpdf;
@@ -15,6 +16,8 @@ class CustomerPaymentComponent extends Component
 {
     public $startDate, $endDate;
     use WithPagination;
+    use LivewireAlert;
+
     public $amount, $customer, $orderBy='id', $serialize='desc', $paginate=10, $search='', $customerId, $selectall = false, $selections = [];
     protected $listeners = ['deleteConfirmed' => 'delete'];
 
