@@ -24,9 +24,9 @@ class LoginComponent extends Component
 
     public function mount()
     {
-        if (Auth::check()){
-            return redirect()->route('home');
-        }
+//        if (Auth::check()){
+//            return redirect()->route('home');
+//        }
     }
     public function authenticate()
     {
